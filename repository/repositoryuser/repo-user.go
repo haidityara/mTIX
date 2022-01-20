@@ -10,6 +10,7 @@ import (
 type RepositoryUser interface {
 	Create(data entity.User) (entity.User, error)
 	IsEmailExist(email string) error
+	IsAdmin(id uint) error
 	Login(email string) (entity.User, error)
 	Update(data entity.User) (entity.User, error)
 	DeleteByID(id uint) error
@@ -17,6 +18,17 @@ type RepositoryUser interface {
 
 type repository struct {
 	db *gorm.DB
+}
+
+func (r *repository) IsAdmin(id uint) error {
+	var user entity.User
+	if err := r.db.Where("id = ?", id).First(&user).Error; err != nil {
+		return err
+	}
+	if user.Role != constant.Admin {
+		return errors.New("user is not admin")
+	}
+	return nil
 }
 
 func New(db *gorm.DB) RepositoryUser {

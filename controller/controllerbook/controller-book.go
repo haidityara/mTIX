@@ -6,15 +6,36 @@ import (
 	"github.com/haidityara/mtix/model/modelbook"
 	"github.com/haidityara/mtix/service/servicebook"
 	"net/http"
+	"strconv"
 )
 
 type ControllerBook interface {
 	Create(ctx *gin.Context)
 	GetByID(ctx *gin.Context)
+	UpdateStatusBook(ctx *gin.Context)
 }
 
 type controller struct {
 	srv servicebook.ServiceBook
+}
+
+func (c *controller) UpdateStatusBook(ctx *gin.Context) {
+	id := ctx.Param("id")
+	request := modelbook.RequestUpdateStatus{}
+	err := ctx.ShouldBind(&request)
+	if err != nil {
+		ctx.JSON(http.StatusUnauthorized, helper.NewResponse(http.StatusUnprocessableEntity, nil, err))
+		return
+	}
+	idUint64, _ := strconv.ParseUint(id, 10, 64)
+	request.ID = uint(idUint64)
+	book, err := c.srv.UpdateStatusBook(request)
+	if err != nil {
+		ctx.JSON(helper.GetStatusCode(err), helper.NewResponse(http.StatusUnprocessableEntity, nil, err))
+		return
+	}
+	ctx.JSON(http.StatusOK, helper.NewResponse(http.StatusOK, book, nil))
+	return
 }
 
 func (c *controller) GetByID(ctx *gin.Context) {

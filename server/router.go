@@ -116,6 +116,7 @@ func NewRouter(r *gin.Engine, db *gorm.DB) {
 
 	//route bok
 	r.POST("/books", middleware.Authorization, ctrlBook.Create)
+	r.POST("/books/:id/update-status", middleware.Authorization, ctrlBook.UpdateStatusBook)
 	r.GET("/books/:id", middleware.Authorization, ctrlBook.GetByID)
 
 	// route payment

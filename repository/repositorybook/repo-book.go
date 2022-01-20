@@ -12,10 +12,19 @@ type RepositoryBook interface {
 	GetByUserID(id string) (entity.Booking, error)
 	GetAll() ([]entity.Booking, error)
 	CreateDetailBook(data []entity.BookingDetail) ([]entity.BookingDetail, error)
+	UpdateStatusBook(data entity.Booking) (entity.Booking, error)
 }
 
 type repository struct {
 	db *gorm.DB
+}
+
+func (r *repository) UpdateStatusBook(data entity.Booking) (entity.Booking, error) {
+	err := r.db.Model(&data).Where("id = ?", data.ID).Update("status", data.Status).Error
+	if err != nil {
+		return entity.Booking{}, err
+	}
+	return data, nil
 }
 
 func (r *repository) CreateDetailBook(data []entity.BookingDetail) ([]entity.BookingDetail, error) {

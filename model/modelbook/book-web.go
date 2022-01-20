@@ -14,9 +14,14 @@ type Request struct {
 type ResponseStore struct {
 	ID        uint      `json:"id"`
 	Status    int       `json:"status"`
-	UserID    uint      `json:"user_id"`
+	UserID    uint      `json:"user_id,omitempty"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
+}
+
+type RequestUpdateStatus struct {
+	ID     uint `json:"id"`
+	Status int  `json:"status"`
 }
 
 type ResponseGet struct {

@@ -8,6 +8,7 @@ type Request struct {
 	Email    string `json:"email" example:"test@example.com"`
 	Phone    string `json:"phone" example:"+628123456789"`
 	Password string `json:"password" example:"password"`
+	Role     int    `json:"role" example:"1"`
 }
 
 type Response struct {
@@ -17,6 +18,7 @@ type Response struct {
 	FullName  string     `json:"full_name" example:"jhondoe"`
 	Email     string     `json:"email" example:"test@example.com"`
 	Phone     string     `json:"phone" example:"+628123456789"`
+	Role      int        `json:"role" example:"1"`
 }
 
 type RequestLogin struct {

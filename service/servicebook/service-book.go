@@ -11,10 +11,23 @@ type ServiceBook interface {
 	Create(request modelbook.Request) (modelbook.ResponseStore, error)
 	GetByID(id string) (modelbook.ResponseGet, error)
 	GetByUserID(id string) (modelbook.ResponseGet, error)
+	UpdateStatusBook(request modelbook.RequestUpdateStatus) (modelbook.ResponseStore, error)
 }
 
 type service struct {
 	repo repositorybook.RepositoryBook
+}
+
+func (s *service) UpdateStatusBook(request modelbook.RequestUpdateStatus) (modelbook.ResponseStore, error) {
+	book := entity.Booking{}
+	copier.Copy(&book, &request)
+	statusBook, err := s.repo.UpdateStatusBook(book)
+	if err != nil {
+		return modelbook.ResponseStore{}, err
+	}
+	resp := modelbook.ResponseStore{}
+	copier.Copy(&resp, &statusBook)
+	return resp, nil
 }
 
 func (s *service) Create(request modelbook.Request) (modelbook.ResponseStore, error) {
