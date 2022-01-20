@@ -5,15 +5,18 @@ import (
 	"github.com/haidityara/mtix/controller/controllercinema"
 	"github.com/haidityara/mtix/controller/controllercinemacity"
 	"github.com/haidityara/mtix/controller/controllercinemahall"
+	"github.com/haidityara/mtix/controller/controllercinemaseat"
 	"github.com/haidityara/mtix/controller/controlleruser"
 	"github.com/haidityara/mtix/middleware"
 	"github.com/haidityara/mtix/repository/repositorycinema"
 	"github.com/haidityara/mtix/repository/repositorycinemacity"
 	"github.com/haidityara/mtix/repository/repositorycinemahall"
+	"github.com/haidityara/mtix/repository/repositorycinemaseat"
 	"github.com/haidityara/mtix/repository/repositoryuser"
 	"github.com/haidityara/mtix/service/sericecinemacity"
 	"github.com/haidityara/mtix/service/servicecinema"
 	"github.com/haidityara/mtix/service/servicecinemahall"
+	"github.com/haidityara/mtix/service/servicecinemaseat"
 	"github.com/haidityara/mtix/service/serviceuser"
 	"gorm.io/gorm"
 )
@@ -33,9 +36,15 @@ func NewRouter(r *gin.Engine, db *gorm.DB) {
 	srvCinema := servicecinema.New(repoCinema)
 	ctrlCinema := controllercinema.New(srvCinema)
 
+	// cinema hall
 	repoCinemaHall := repositorycinemahall.New(db)
 	srvCinemaHall := servicecinemahall.New(repoCinemaHall)
 	ctrlCinemaHall := controllercinemahall.New(srvCinemaHall)
+
+	// cinema seat
+	repoCinemaSeat := repositorycinemaseat.New(db)
+	srvCinemaSeat := servicecinemaseat.New(repoCinemaSeat)
+	ctrlCinemaSeat := controllercinemaseat.New(srvCinemaSeat)
 
 	routeUser := r.Group("/users")
 
@@ -53,7 +62,11 @@ func NewRouter(r *gin.Engine, db *gorm.DB) {
 	r.POST("/cinema", middleware.Authorization, ctrlCinema.Create)
 	r.GET("/cinema/:id", middleware.Authorization, ctrlCinema.GetByID)
 
-	// router cinema hall
+	// route cinema hall
 	r.POST("/cinema-hall", middleware.Authorization, ctrlCinemaHall.Create)
 	r.GET("/cinema-hall/:id", middleware.Authorization, ctrlCinemaHall.GetByID)
+
+	// route cinema seat
+	r.POST("/cinema-seat", middleware.Authorization, ctrlCinemaSeat.Create)
+	r.GET("/cinema-seat/:id", middleware.Authorization, ctrlCinemaSeat.GetByID)
 }
