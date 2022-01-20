@@ -6,7 +6,7 @@ type BookingDetail struct {
 	ID           uint        `json:"id" gorm:"primaryKey"`
 	NumberOFSeat int         `json:"number_of_seat"`
 	Price        string      `json:"price"`
-	CinemaSeatID string      `json:"cinema_seat_id"`
+	CinemaSeatID uint        `json:"cinema_seat_id"`
 	CinemaSeat   *CinemaSeat `gorm:"foreignKey:CinemaSeatID"`
 	ShowID       uint        `json:"show_id"`
 	Show         *Show       `gorm:"foreignKey:ShowID"`

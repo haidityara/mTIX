@@ -2,6 +2,7 @@ package server
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/haidityara/mtix/controller/controllerbook"
 	"github.com/haidityara/mtix/controller/controllercinema"
 	"github.com/haidityara/mtix/controller/controllercinemacity"
 	"github.com/haidityara/mtix/controller/controllercinemahall"
@@ -10,6 +11,7 @@ import (
 	"github.com/haidityara/mtix/controller/controllershow"
 	"github.com/haidityara/mtix/controller/controlleruser"
 	"github.com/haidityara/mtix/middleware"
+	"github.com/haidityara/mtix/repository/repositorybook"
 	"github.com/haidityara/mtix/repository/repositorycinema"
 	"github.com/haidityara/mtix/repository/repositorycinemacity"
 	"github.com/haidityara/mtix/repository/repositorycinemahall"
@@ -18,6 +20,7 @@ import (
 	"github.com/haidityara/mtix/repository/repositoryshow"
 	"github.com/haidityara/mtix/repository/repositoryuser"
 	"github.com/haidityara/mtix/service/sericecinemacity"
+	"github.com/haidityara/mtix/service/servicebook"
 	"github.com/haidityara/mtix/service/servicecinema"
 	"github.com/haidityara/mtix/service/servicecinemahall"
 	"github.com/haidityara/mtix/service/servicecinemaseat"
@@ -62,6 +65,11 @@ func NewRouter(r *gin.Engine, db *gorm.DB) {
 	srvShow := serviceshow.New(repoShow)
 	ctrlShow := controllershow.New(srvShow)
 
+	// route book
+	repoBook := repositorybook.New(db)
+	srvBook := servicebook.New(repoBook)
+	ctrlBook := controllerbook.New(srvBook)
+
 	routeUser := r.Group("/users")
 
 	// route user
@@ -95,4 +103,8 @@ func NewRouter(r *gin.Engine, db *gorm.DB) {
 	r.POST("/shows", middleware.Authorization, ctrlShow.Create)
 	r.GET("/shows/:id", middleware.Authorization, ctrlShow.GetByID)
 	r.GET("/shows/date/:date", middleware.Authorization, ctrlShow.GetActiveShow)
+
+	//route bok
+	r.POST("/books", middleware.Authorization, ctrlBook.Create)
+	r.GET("/books/:id", middleware.Authorization, ctrlBook.GetByID)
 }

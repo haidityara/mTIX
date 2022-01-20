@@ -9,6 +9,7 @@ import (
 type RepositoryShow interface {
 	Create(data entity.Show) (entity.Show, error)
 	GetByID(id string) (entity.Show, error)
+	GetActiveShow(date time.Time) ([]entity.Show, error)
 }
 
 type repository struct {
