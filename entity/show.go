@@ -4,8 +4,8 @@ import "time"
 
 type Show struct {
 	ID           uint        `json:"id" gorm:"primaryKey"`
-	StartDate    time.Time   `json:"start_date"`
-	EndDate      time.Time   `json:"end_date"`
+	StartTime    time.Time   `json:"start_time"`
+	EndTime      time.Time   `json:"end_time"`
 	MovieID      uint        `json:"movie_id"`
 	Movie        *Movie      `gorm:"foreignKey:MovieID"`
 	CinemaHallID uint        `json:"cinema_hall_id"`

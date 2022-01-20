@@ -8,6 +8,7 @@ import (
 type RepositoryCinemaSeat interface {
 	Create(data entity.CinemaSeat) (entity.CinemaSeat, error)
 	GetByID(id string) (entity.CinemaSeat, error)
+	//GetAvailableSeats(showID string, date time.Time)
 }
 
 type repository struct {
