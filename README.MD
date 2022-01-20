@@ -6,7 +6,7 @@ https://documenter.getpostman.com/view/5667469/UVXojtBS
 
 Main package
 * gin http framework
-* gorm ORM [postgres database]
+* gorm ORM [postgres database] & menggunakan auto migration
 * go-ozzo validation 'time limit jadi tidak bisa semua diberi validation'
 
 Feature Notes
