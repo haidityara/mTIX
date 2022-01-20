@@ -5,7 +5,7 @@ import "time"
 type CinemaHall struct {
 	ID         uint    `json:"id" gorm:"primaryKey"`
 	TotalSeat  int     `json:"total_seat"`
-	CinemaID   string  `json:"cinema_id"`
+	CinemaID   uint    `json:"cinema_id"`
 	Cinema     *Cinema `gorm:"foreignKey:CinemaID"`
 	CinemaSeat []CinemaSeat
 	CreatedAt  time.Time `json:"created_at"`
