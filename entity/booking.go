@@ -3,7 +3,7 @@ package entity
 import "time"
 
 type Booking struct {
-	ID        string    `json:"id"`
+	ID        uint      `json:"id" gorm:"primaryKey"`
 	Date      time.Time `json:"date"`
 	Status    int       `json:"status"`
 	UserID    string    `json:"user_id"`

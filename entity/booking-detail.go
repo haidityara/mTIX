@@ -3,7 +3,7 @@ package entity
 import "time"
 
 type BookingDetail struct {
-	ID           string      `json:"id"`
+	ID           uint        `json:"id" gorm:"primaryKey"`
 	NumberOFSeat int         `json:"number_of_seat"`
 	Price        string      `json:"price"`
 	CinemaSeatID string      `json:"cinema_seat_id"`

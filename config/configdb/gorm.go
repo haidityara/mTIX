@@ -16,7 +16,17 @@ func New() (*gorm.DB, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	err = db.AutoMigrate(entity.User{})
+	err = db.AutoMigrate(entity.CinemaCity{})
+	err = db.AutoMigrate(entity.CinemaSeat{})
+	err = db.AutoMigrate(entity.Cinema{})
+	err = db.AutoMigrate(entity.CinemaHall{})
+	err = db.AutoMigrate(entity.Movie{})
+	err = db.AutoMigrate(entity.Show{})
+	err = db.AutoMigrate(entity.Booking{})
+	err = db.AutoMigrate(entity.BookingDetail{})
+	err = db.AutoMigrate(entity.Payment{})
 
 	if err != nil {
 		return nil, err

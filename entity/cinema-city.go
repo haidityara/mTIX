@@ -3,7 +3,7 @@ package entity
 import "time"
 
 type CinemaCity struct {
-	ID        string    `json:"id"`
+	ID        uint      `json:"id" gorm:"primaryKey"`
 	Name      string    `json:"name"`
 	State     string    `json:"state"`
 	Zip       string    `json:"zip"`

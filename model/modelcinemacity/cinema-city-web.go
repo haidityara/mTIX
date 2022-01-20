@@ -7,7 +7,7 @@ type Request struct {
 }
 
 type Response struct {
-	ID    string `json:"id"`
+	ID    uint   `json:"id"`
 	Name  string `json:"name"`
 	State string `json:"state"`
 	Zip   string `json:"zip"`

@@ -3,7 +3,7 @@ package entity
 import "time"
 
 type Payment struct {
-	ID            string    `json:"id"`
+	ID            uint      `json:"id" gorm:"primaryKey"`
 	Amount        string    `json:"amount"`
 	PaymentMethod int       `json:"payment_method"`
 	BookingID     string    `json:"booking_id"`

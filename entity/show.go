@@ -3,7 +3,7 @@ package entity
 import "time"
 
 type Show struct {
-	ID           string      `json:"id"`
+	ID           uint        `json:"id" gorm:"primaryKey"`
 	StartDate    time.Time   `json:"start_date"`
 	EndDate      time.Time   `json:"end_date"`
 	MovieID      string      `json:"movie_id"`
