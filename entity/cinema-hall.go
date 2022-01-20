@@ -4,6 +4,7 @@ import "time"
 
 type CinemaHall struct {
 	ID         uint    `json:"id" gorm:"primaryKey"`
+	Name       string  `json:"name"`
 	TotalSeat  int     `json:"total_seat"`
 	CinemaID   uint    `json:"cinema_id"`
 	Cinema     *Cinema `gorm:"foreignKey:CinemaID"`

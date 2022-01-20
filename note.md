@@ -1,0 +1,2 @@
+Tester Note
+* Saya tidak semat membuat validasi untuk setiap relasi sudah ada atau tidak di dalam record, jadi jika record tidak ditemukan akan mucul error `ERROR: insert or update on table \"cinema_halls\" violates foreign key constraint \"fk_cinema_halls_cinema\" (SQLSTATE 23503)"` tergantung dimana anda menambah data
