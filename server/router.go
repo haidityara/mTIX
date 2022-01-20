@@ -6,17 +6,20 @@ import (
 	"github.com/haidityara/mtix/controller/controllercinemacity"
 	"github.com/haidityara/mtix/controller/controllercinemahall"
 	"github.com/haidityara/mtix/controller/controllercinemaseat"
+	"github.com/haidityara/mtix/controller/controllermovie"
 	"github.com/haidityara/mtix/controller/controlleruser"
 	"github.com/haidityara/mtix/middleware"
 	"github.com/haidityara/mtix/repository/repositorycinema"
 	"github.com/haidityara/mtix/repository/repositorycinemacity"
 	"github.com/haidityara/mtix/repository/repositorycinemahall"
 	"github.com/haidityara/mtix/repository/repositorycinemaseat"
+	"github.com/haidityara/mtix/repository/repositorymovie"
 	"github.com/haidityara/mtix/repository/repositoryuser"
 	"github.com/haidityara/mtix/service/sericecinemacity"
 	"github.com/haidityara/mtix/service/servicecinema"
 	"github.com/haidityara/mtix/service/servicecinemahall"
 	"github.com/haidityara/mtix/service/servicecinemaseat"
+	"github.com/haidityara/mtix/service/servicemovie"
 	"github.com/haidityara/mtix/service/serviceuser"
 	"gorm.io/gorm"
 )
@@ -46,6 +49,11 @@ func NewRouter(r *gin.Engine, db *gorm.DB) {
 	srvCinemaSeat := servicecinemaseat.New(repoCinemaSeat)
 	ctrlCinemaSeat := controllercinemaseat.New(srvCinemaSeat)
 
+	// route movie
+	repoMovie := repositorymovie.New(db)
+	srvMovie := servicemovie.New(repoMovie)
+	ctrlMovie := controllermovie.New(srvMovie)
+
 	routeUser := r.Group("/users")
 
 	// route user
@@ -69,4 +77,9 @@ func NewRouter(r *gin.Engine, db *gorm.DB) {
 	// route cinema seat
 	r.POST("/cinema-seat", middleware.Authorization, ctrlCinemaSeat.Create)
 	r.GET("/cinema-seat/:id", middleware.Authorization, ctrlCinemaSeat.GetByID)
+
+	// route movie
+	r.POST("/movies", middleware.Authorization, ctrlMovie.Create)
+	r.GET("/movies/:id", middleware.Authorization, ctrlMovie.GetByID)
+	r.GET("/movies", middleware.Authorization, ctrlMovie.GetAll)
 }
