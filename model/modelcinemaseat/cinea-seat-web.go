@@ -26,3 +26,8 @@ type ResponseGet struct {
 	CreatedAt    time.Time                    `json:"created_at,omitempty"`
 	UpdatedAt    time.Time                    `json:"updated_at,omitempty"`
 }
+
+type RequestAvailableSeat struct {
+	CinemaHallID uint `json:"cinema_hall_id"`
+	ShowID       uint `json:"show_id"`
+}

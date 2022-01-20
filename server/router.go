@@ -101,6 +101,7 @@ func NewRouter(r *gin.Engine, db *gorm.DB) {
 	// route cinema seat
 	r.POST("/cinema-seat", middleware.Authorization, ctrlCinemaSeat.Create)
 	r.GET("/cinema-seat/:id", middleware.Authorization, ctrlCinemaSeat.GetByID)
+	r.POST("/cinema-seat/shows/", middleware.Authorization, ctrlCinemaSeat.GetAvailableSeats)
 
 	// route movie
 	r.POST("/movies", middleware.Authorization, ctrlMovie.Create)
@@ -109,8 +110,9 @@ func NewRouter(r *gin.Engine, db *gorm.DB) {
 
 	// route show
 	r.POST("/shows", middleware.Authorization, ctrlShow.Create)
+	r.GET("/shows", middleware.Authorization, ctrlShow.GetAllShow)
 	r.GET("/shows/:id", middleware.Authorization, ctrlShow.GetByID)
-	r.GET("/shows/date/:date", middleware.Authorization, ctrlShow.GetActiveShow)
+	r.GET("/shows/date/", middleware.Authorization, ctrlShow.GetActiveShow)
 
 	//route bok
 	r.POST("/books", middleware.Authorization, ctrlBook.Create)

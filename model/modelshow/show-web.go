@@ -11,6 +11,7 @@ type Request struct {
 	EndTime      string `json:"end_time"`
 	MovieID      uint   `json:"movie_id"`
 	CinemaHallID uint   `json:"cinema_hall_id"`
+	DateShow     string `json:"date"`
 	Price        string `json:"price"`
 }
 
@@ -20,6 +21,7 @@ type ResponseStore struct {
 	EndTime      time.Time `json:"end_time"`
 	MovieID      uint      `json:"movie_id"`
 	CinemaHallID uint      `json:"cinema_hall_id"`
+	DateShow     time.Time `json:"date"`
 	Price        string    `json:"price"`
 	CreatedAt    time.Time `json:"created_at"`
 	UpdatedAt    time.Time `json:"updated_at"`
@@ -34,6 +36,7 @@ type ResponseGet struct {
 	CinemaHallID uint                        `json:"cinema_hall_id"`
 	CinemaHall   modelcinemahall.ResponseGet `json:"cinema_hall"`
 	Price        string                      `json:"price"`
+	DateShow     time.Time                   `json:"date"`
 	CreatedAt    time.Time                   `json:"created_at"`
 	UpdatedAt    time.Time                   `json:"updated_at"`
 }

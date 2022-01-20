@@ -10,10 +10,19 @@ import (
 type ServiceCinemaSeat interface {
 	Create(request modelcinemaseat.Request) (modelcinemaseat.ResponseStore, error)
 	GetByID(id string) (modelcinemaseat.ResponseGet, error)
+	GetAvailableSeats(showID uint, cinemaHallID uint) ([]entity.CinemaSeat, error)
 }
 
 type service struct {
 	repo repositorycinemaseat.RepositoryCinemaSeat
+}
+
+func (s *service) GetAvailableSeats(showID uint, cinemaHallID uint) ([]entity.CinemaSeat, error) {
+	seats, err := s.repo.GetAvailableSeats(showID, cinemaHallID)
+	if err != nil {
+		return []entity.CinemaSeat{}, err
+	}
+	return seats, nil
 }
 
 func (s *service) Create(request modelcinemaseat.Request) (modelcinemaseat.ResponseStore, error) {

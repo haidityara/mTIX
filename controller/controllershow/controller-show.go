@@ -12,10 +12,20 @@ type ControllerShow interface {
 	Create(ctx *gin.Context)
 	GetByID(ctx *gin.Context)
 	GetActiveShow(ctx *gin.Context)
+	GetAllShow(ctx *gin.Context)
 }
 
 type controller struct {
 	srv serviceshow.ServiceShow
+}
+
+func (c *controller) GetAllShow(ctx *gin.Context) {
+	shows, err := c.srv.GetAll()
+	if err != nil {
+		ctx.JSON(helper.GetStatusCode(err), helper.NewResponse(helper.GetStatusCode(err), nil, err))
+		return
+	}
+	ctx.JSON(http.StatusOK, helper.NewResponse(http.StatusOK, shows, nil))
 }
 
 func (c *controller) Create(ctx *gin.Context) {
@@ -46,8 +56,8 @@ func (c *controller) GetByID(ctx *gin.Context) {
 }
 
 func (c *controller) GetActiveShow(ctx *gin.Context) {
-	date := ctx.Param("date")
-	show, err := c.srv.GetActiveShow(date)
+
+	show, err := c.srv.GetActiveShow()
 	if err != nil {
 		ctx.JSON(helper.GetStatusCode(err), helper.NewResponse(helper.GetStatusCode(err), nil, err))
 		return

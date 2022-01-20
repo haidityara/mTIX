@@ -11,10 +11,25 @@ import (
 type ControllerCinemaSeat interface {
 	Create(ctx *gin.Context)
 	GetByID(ctx *gin.Context)
+	GetAvailableSeats(ctx *gin.Context)
 }
 
 type controller struct {
 	srv servicecinemaseat.ServiceCinemaSeat
+}
+
+func (c *controller) GetAvailableSeats(ctx *gin.Context) {
+	request := modelcinemaseat.RequestAvailableSeat{}
+	err := ctx.ShouldBind(&request)
+	if err != nil {
+		ctx.JSON(http.StatusUnprocessableEntity, helper.NewResponse(http.StatusUnprocessableEntity, nil, err))
+		return
+	}
+	seats, err := c.srv.GetAvailableSeats(request.ShowID, request.CinemaHallID)
+	if err != nil {
+		return
+	}
+	ctx.JSON(http.StatusOK, helper.NewResponse(http.StatusOK, seats, nil))
 }
 
 func (c *controller) Create(ctx *gin.Context) {

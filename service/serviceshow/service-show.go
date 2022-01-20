@@ -6,22 +6,39 @@ import (
 	"github.com/haidityara/mtix/model/modelshow"
 	"github.com/haidityara/mtix/repository/repositoryshow"
 	"github.com/jinzhu/copier"
+	"time"
 )
 
 type ServiceShow interface {
 	Create(request modelshow.Request) (modelshow.ResponseStore, error)
 	GetByID(id string) (modelshow.ResponseGet, error)
-	GetActiveShow(date string) ([]modelshow.ResponseGet, error)
+	GetActiveShow() ([]modelshow.ResponseGet, error)
+	GetAll() ([]modelshow.ResponseGet, error)
 }
-
 type service struct {
 	repo repositoryshow.RepositoryShow
+}
+
+func (s *service) GetAll() ([]modelshow.ResponseGet, error) {
+	data, err := s.repo.GetAll()
+	if err != nil {
+		return []modelshow.ResponseGet{}, err
+	}
+	var response []modelshow.ResponseGet
+	for _, d := range data {
+		var res modelshow.ResponseGet
+		copier.Copy(&res, &d)
+		res.StartTime = helper.DateTOString(d.StartTime)
+		res.EndTime = helper.DateTOString(d.EndTime)
+		response = append(response, res)
+	}
+	return response, nil
 }
 
 func (s *service) Create(request modelshow.Request) (modelshow.ResponseStore, error) {
 	show := entity.Show{}
 	copier.Copy(&show, &request)
-
+	show.DateShow = helper.ToDateFormatter(request.DateShow)
 	show.StartTime = helper.ToTimeFormatter(request.StartTime)
 	show.EndTime = helper.ToTimeFormatter(request.EndTime)
 
@@ -46,8 +63,9 @@ func (s service) GetByID(id string) (modelshow.ResponseGet, error) {
 	return resp, nil
 }
 
-func (s service) GetActiveShow(date string) ([]modelshow.ResponseGet, error) {
-	response, err := s.repo.GetActiveShow(helper.ToDateFormatter(date))
+func (s service) GetActiveShow() ([]modelshow.ResponseGet, error) {
+	date := time.Now()
+	response, err := s.repo.GetActiveShow(date)
 	if err != nil {
 		return []modelshow.ResponseGet{}, err
 	}
